@@ -1,0 +1,9 @@
+v_lib1 v_lib2 v_lib3 v_lib4
+u_lib1 u_lib2 u_lib3 v_lib2 v_lib3 u_lib4
+u_lib1 lib4 lib2 lib3 v_lib1 lib1 v_lib3
+
+v_lib1 lib10 lib20 v_lib3 lib30
+lib30 u_lib1 v_lib2
+
+lib4 v_lib4 v_lib1
+v_lib2

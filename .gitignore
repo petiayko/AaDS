@@ -1,0 +1,8 @@
+*.pyc
+.idea/
+Module 2/B/cmake-build-debug
+Module 2/B/.idea
+Module 2/C/cmake-build-debug
+Module 2/C/.idea
+Module 3/C/cmake-build-debug
+Module 3/C/.idea
