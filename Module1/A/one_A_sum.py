@@ -23,8 +23,12 @@ def get_ints(s):
     return summa
 
 
-if __name__ == '__main__':
+def handler():
     result = 0
     for v in sys.stdin.read().split():
         result += get_ints(v)
     print(result)
+
+
+if __name__ == '__main__':
+    handler()
