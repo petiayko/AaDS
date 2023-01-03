@@ -1,3 +1,6 @@
+#ifndef SPLAYTREE_SPLAY_TREE_HPP
+#define SPLAYTREE_SPLAY_TREE_HPP
+
 #include <iostream>
 #include <queue>
 #include <sstream>
@@ -244,8 +247,8 @@ private:
             grandparent = parent->parent;
             if (!grandparent) {
                 _zig(x);
-            } else if (x == parent->left && parent == grandparent->left ||
-                       x == parent->right && parent == grandparent->right) {
+            } else if ((x == parent->left && parent == grandparent->left) ||
+                       (x == parent->right && parent == grandparent->right)) {
                 _zig_zig(x);
             } else {
                 _zig_zag(x);
@@ -400,9 +403,9 @@ void parser(const std::string &&command, std::string &name, std::string &key, st
     std::istringstream stream(command);
     stream >> name >> key >> value >> dump;
 }
-
-int main() {
-    SplayTree<> spt;
+template<class O, class I>
+void handler(O &stream_out, I &stream_in) {
+    SplayTree<int64_t, std::string> spt;
 
     std::string command;
     std::string name;
@@ -413,7 +416,7 @@ int main() {
     std::pair<bool, std::string> search_res;
     std::pair<int64_t, std::string> minmax_res;
 
-    while (getline(std::cin, command)) {
+    while (getline(stream_in, command)) {
         if (command.empty()) {
             continue;
         }
@@ -422,62 +425,64 @@ int main() {
             if (name == "min") {
                 try {
                     minmax_res = spt.min();
-                    std::cout << minmax_res.first << ' ' << minmax_res.second << '\n';
+                    stream_out << minmax_res.first << ' ' << minmax_res.second << '\n';
                 } catch (std::logic_error &) {
-                    std::cout << "error\n";
+                    stream_out << "error\n";
                 }
             } else if (name == "max") {
                 try {
                     minmax_res = spt.max();
-                    std::cout << minmax_res.first << ' ' << minmax_res.second << '\n';
+                    stream_out << minmax_res.first << ' ' << minmax_res.second << '\n';
                 } catch (std::logic_error &) {
-                    std::cout << "error\n";
+                    stream_out << "error\n";
                 }
             } else if (name == "print") {
-                std::cout << spt;
+                stream_out << spt;
             } else {
-                std::cout << "error\n";
+                stream_out << "error\n";
             }
         } else if (dump.empty()) {
             if (name == "search") {
                 if (!value.empty()) {
-                    std::cout << "error\n";
+                    stream_out << "error\n";
                     continue;
                 }
                 search_res = spt.search(std::stoll(key));
                 if (search_res.first) {
-                    std::cout << "1 " << search_res.second << '\n';
+                    stream_out << "1 " << search_res.second << '\n';
                     continue;
                 }
-                std::cout << "0\n";
+                stream_out << "0\n";
             } else if (name == "delete") {
                 if (!value.empty()) {
-                    std::cout << "error\n";
+                    stream_out << "error\n";
                     continue;
                 }
                 try {
                     spt.remove(std::stoll(key));
                 } catch (std::logic_error &) {
-                    std::cout << "error\n";
+                    stream_out << "error\n";
                 }
             } else if (name == "add") {
                 try {
                     spt.add(std::stoll(key), value);
                 } catch (std::logic_error &) {
-                    std::cout << "error\n";
+                    stream_out << "error\n";
                 }
             } else if (name == "set") {
                 try {
                     spt.set(std::stoll(key), value);
                 } catch (std::logic_error &) {
-                    std::cout << "error\n";
+                    stream_out << "error\n";
                 }
             } else {
-                std::cout << "error\n";
+                stream_out << "error\n";
             }
         } else {
-            std::cout << "error\n";
+            stream_out << "error\n";
         }
     }
-    return 0;
 }
+
+
+#endif //SPLAYTREE_SPLAY_TREE_HPP

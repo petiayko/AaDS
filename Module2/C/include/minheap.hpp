@@ -1,3 +1,6 @@
+#ifndef MINHEAP_MINHEAP_HPP
+#define MINHEAP_MINHEAP_HPP
+
 #include <algorithm>
 #include <iostream>
 #include <sstream>
@@ -262,7 +265,7 @@ void handler(I &stream_in, O &stream_out) {
                     continue;
                 }
                 index = mhp.index(std::stoll(key));
-                if (index != -1) {
+                if (index != static_cast<size_t>(-1)) {
                     stream_out << "1 " << index << " " << mhp.at(index).value << '\n';
                     continue;
                 }
@@ -298,7 +301,5 @@ void handler(I &stream_in, O &stream_out) {
     }
 }
 
-int main() {
-    handler<std::istream, std::ostream>(std::cin, std::cout);
-    return 0;
-}
+
+#endif //MINHEAP_MINHEAP_HPP
