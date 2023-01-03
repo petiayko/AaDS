@@ -1,3 +1,6 @@
+#ifndef KNAPSACK_KNAPSACK_HPP
+#define KNAPSACK_KNAPSACK_HPP
+
 #include <algorithm>
 #include <cmath>
 #include <iostream>
@@ -8,85 +11,6 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
-
-
-class BitArray {
-private:
-    bool *data_ = nullptr;
-    size_t size_ = 0u;
-
-public:
-    BitArray() {
-        /// Конструктор класса
-        size_ = 0u;
-        data_ = nullptr;
-    }
-
-    explicit BitArray(size_t n) noexcept {
-        /// Конструктор класса
-        data_ = new bool[n]{false};
-        size_ = n;
-    }
-
-    BitArray(const BitArray &ba) noexcept {
-        /// Конструктор копирования
-        data_ = new bool[ba.size_];
-        for (size_t i = 0; i < ba.size_; ++i) {
-            data_[i] = ba.data_[i];
-        }
-        size_ = ba.size_;
-    }
-
-    ~BitArray() {
-        /// Деструктор класса
-        delete[] data_;
-        size_ = 0u;
-    }
-
-    BitArray &operator=(const BitArray &ba) noexcept {
-        /// Оператор присваивания
-        if (data_ != ba.data_) {
-            delete[] data_;
-            data_ = new bool[ba.size_];
-            size_ = ba.size_;
-            for (auto i = 0; i < ba.size_; ++i) {
-                data_[i] = ba.data_[i];
-            }
-        }
-        return *this;
-    }
-
-    bool operator[](size_t i) const {
-        /// Оператор доступа по индексу
-        if (i >= size_ || !data_) {
-            throw std::out_of_range{"index is out of range"};
-        }
-        return *(data_ + i);
-    }
-
-    bool &operator[](size_t i) {
-        /// Оператор доступа по индексу
-        if (i >= size_ || !data_) {
-            throw std::out_of_range{"index is out of range"};
-        }
-        return data_[i];
-    }
-
-    [[nodiscard]] std::string to_string() {
-        if (!data_) {
-            return "";
-        }
-        std::string output;
-        for (auto i = 0; i < size_; ++i) {
-            if (!data_[i]) {
-                output += '0';
-                continue;
-            }
-            output += '1';
-        }
-        return output;
-    }
-};
 
 std::tuple<size_t, size_t, std::unordered_set<size_t>> knapsack_solve(const float eps, size_t w_max,
                                                                       const std::vector<std::pair<size_t, size_t>> &items) {
@@ -116,7 +40,7 @@ std::tuple<size_t, size_t, std::unordered_set<size_t>> knapsack_solve(const floa
     size_t costs_max = 0;
     std::unordered_map<size_t, size_t> indexes_map;
 
-    for (auto i = 0; i < items.size(); ++i) {
+    for (size_t i = 0; i < items.size(); ++i) {
         if (items[i].first > w_max || !items[i].second) {
             continue;
         }
@@ -232,7 +156,4 @@ void handler(O &stream_out, I &stream_in) {
     }
 }
 
-int main() {
-    handler<std::ostream, std::istream>(std::cout, std::cin);
-    return 0;
-}
+#endif //KNAPSACK_KNAPSACK_HPP
